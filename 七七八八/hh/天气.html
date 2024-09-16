@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>天气预报</h1>
+    <h3>请输入要查询的城市</h3>
+    <input type="text" id="input-text">
+    <input type="button" value="查询" onclick="searchWeather()">
+    <h3>查询结果</h3>
+    <ul>
+        <li>城市：<span id="city"></span></li>
+        <li>天气：<span id="weather"></span></li>
+    </ul>
+    <script>
+        function searchWeather(){
+            var city = $("#input-text").val();
+            $.ajax({
+                url:'https://v0.yiketianqi.com/api',
+                type:"GET",
+                dataType:"json",
+                data: { city: city },
+                success:function(resp){
+                    $("#city").text(resp.city);
+                    $("#weather").text(resp.data[0].wea);
+                },
+                error:function(){
+                    alert("网络异常");
+                }
+            });
+        };
+    </script>
+</body>
+</html>
